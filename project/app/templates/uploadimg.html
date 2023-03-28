@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+
+    }
+
+    body {
+        background-color: #141213;
+    }
+    .p-10-px {
+            padding: 10px;
+            border: 1px solid white;
+            margin-left: 10px;
+           position: fixed;
+           overflow: auto;
+           max-height: 450px ;
+           margin-left: 50%;
+    }
+    form{
+        height: fit-content;
+        width: 100%;
+        border-radius: 8px;
+        background-color: black;
+        padding: 30px;
+        color: white;
+
+    }
+    form h3{
+        text-transform: uppercase;
+    }
+    .btnn1{
+        width: 200px;
+    }
+    .btnn2{
+        position: absolute;
+        left: 91%;
+        top: 10px;
+        width: 100px;
+    }
+    
+    .a2{
+        color: white;
+        box-sizing: border-box;
+        position: absolute;
+        left: 60%;
+        bottom: 80px;
+        text-transform: uppercase;
+        font-size: 25px;
+        font-weight: 900;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    input[type=file]{
+        cursor: pointer !important;
+    }
+
+</style>
+
+<body>
+    <form action="" method='post' enctype="multipart/form-data" class="fixed-top">
+        {% csrf_token %}
+
+
+
+      <div class="container a1">
+     <div class="b1">
+        <h3>upload image</h3>
+
+        <input type="file" name="imagee" id="" value="" class="mt-4" required>
+        <br>
+        <input type="submit" name=" " id="" value="upload" class="btn btn-success mt-3 btnn1">
+        <a href="welcome" class="btn btn-secondary btnn2">back</a>
+     </div>
+      </div>
+
+      <div class="container a2">
+        <p>NAME : {{view1}}</p>
+       </div>
+
+    </form>
+    <br> <br><br><br><br> <br><br><br><br> 
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 "style="border: 1px solid white;">
+                <div class="row">
+                    {% for i in views %}
+                    <div class="col-sm-4 p-2">
+                        <div class="card">
+                            <a onclick='viewComments("{{i.id}}")' href="javascript:void(0)">
+                                <img class="card-img-top" src="{{i.image.url}}" width="200" height="200" alt="" alt="">
+                            </a>
+                            <a href="{% url 'delete' i.id %}" class="btn btn-danger m-2">delete</a>
+                        </div>
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="col-sm-4 p-10-px" >
+                <div class="comment-section">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        function viewComments(id) {
+            var url = "{% url 'view_comments' %}";
+            // alert(id)
+            if (id != '' && id != null) {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        var status = data['status'];
+                        var template = data['template'];
+                        if (status == "true") {
+                            $('.comment-section').html(template);
+                        } else {
+                            $('.comment-section').html("");
+                        }
+                    },
+                    error: function (data) {
+                        alert("error")
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<link rel = "stylesheet" href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+<div class = "msg-all-cont">
+    {% for comment in comments %}
+	<div class="row mb-1 bg-comment">
+   		<div class="col-sm-2" id = "icon-h" class = "reset-c">
+    		<i class = "fas fa-user fa-user-s"></i>
+   		</div>
+   		<div class="col-sm-7" id = "msg-h" class = "reset-c">
+    		<p id = "msg-head" class = "reset-c">{{comment.user.username}}</p>
+    		<p id = "msg-txt" class = "reset-c"><b>{{comment.comment}}</b></p>
+   		</div>
+      <div class="col-sm-3 mt-2">
+        <a href="{% url 'detect' comment.id %}" class="btn btn-danger">detect</a>
+      </div>
+	</div>
+  {% endfor %}
+ </ul>
+</div>
+<style>
+	.reset-c {
+  padding: 0px;
+  margin: 0px;
+ }
+.msg-all-cont {
+ padding: 10px;
+ height: auto;
+}
+.bg-comment {
+	padding:5px;
+	margin-bottom: 10px !important;
+	background: #39C7D4;
+}
+#i-s- {
+  margin: 0px 2.5%;
+}
+.fa-user-s {
+  font-size: 35px;
+  color: white;
+}
+
+#-is- {
+  width: calc(100%);
+}
+
+#msg-txt, #msg-head {
+  font-size: 18px;
+  font-family: Monospace;
+  /*
+    More/Extended Monospace:
+    "Lucida Console", Monaco, Monospace
+    "Courier New", Courier, Monospace
+  */
+}
+#msg-head {
+  color: #123962;
+}
+#msg-txt {
+  color: #FFFFFF;
+}
+
+#other-h {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mb {
+  font-size: 30px;
+  margin: 0px 7.5px;
+}
+.fa-heart-s {
+  color: #DDDDDD;
+  transition: 0.5s;
+}
+.fa-star-s {
+  color: #DDDDDD;
+  transition: 0.5s;
+}
+.fa-ellipsis-v-s {
+  color: #123962;
+}
+
+.fa-heart-s:hover {
+  color: rgb(225, 5, 5);
+}
+.fa-star-s:hover {
+  color: rgb(265, 150, 0);
+}
+</style>
